@@ -12,11 +12,15 @@ def copy_row():
         number_row = int(input(f"Ошибка!"
                                    f"Введите номер строки "
                                    f"от 1 до {count_rows}: "))
-    data_row = data[number_row - 1]
+    data_row = data[number_row - 1].split(";")
     number = int(input("Выберите файл, куда необходимо вставить строку:  "))
     while number < 1 or number > 2:
         number = int(input("Ошибка!!!\n"
                            "Введите цифру 1 или 2: "))
+    with open(f'db/data_{number}.txt', 'r', encoding='utf-8') as file:
+        data = file.readlines() 
+    data_row[0] = f'{len(data) + 1}'
+    new_data_row = ';'.join(data_row)           
     with open(f'db/data_{number}.txt', 'a', encoding='utf-8') as file:
-        file.write(data_row)
+        file.write(new_data_row)
     print("Данные скопированы и вставлены!") 
